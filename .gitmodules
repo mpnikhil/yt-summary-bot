@@ -1,0 +1,3 @@
+[submodule "youtube-mcp"]
+	path = youtube-mcp
+	url = https://github.com/mpnikhil/youtube-mcp.git

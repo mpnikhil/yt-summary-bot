@@ -1,0 +1,15 @@
+[Unit]
+Description=YouTube Summarizer Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/.local/bin/yt-summarizer-telegram.py
+Restart=always
+RestartSec=10
+# EDIT: Add your bot token below
+Environment=TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN_HERE
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=default.target
