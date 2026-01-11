@@ -4,10 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 %h/.local/bin/yt-summarizer-telegram.py
+# EDIT: Update path to where you cloned the repo
+WorkingDirectory=%h/yt-summarizer
+ExecStart=/usr/bin/python3 %h/yt-summarizer/yt-summarizer-telegram.py
 Restart=always
 RestartSec=10
-# EDIT: Add your bot token below
+# EDIT: Add your bot token
 Environment=TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN_HERE
 Environment=PATH=/usr/local/bin:/usr/bin:/bin
 

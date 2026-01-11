@@ -11,6 +11,11 @@ import os
 import re
 import subprocess
 import requests
+from pathlib import Path
+
+# Project directory (where this script and mcp config live)
+PROJECT_DIR = Path(__file__).parent.resolve()
+MCP_CONFIG = PROJECT_DIR / "claude-config.json"
 
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 if not BOT_TOKEN:
@@ -39,18 +44,26 @@ def send_message(chat_id, text):
     })
 
 def summarize(url):
-    """Call Claude CLI to summarize video"""
+    """Call Claude CLI to summarize video using YouTube MCP server"""
     try:
         result = subprocess.run(
-            ["claude", "--print", f"""Summarize this YouTube video. Provide:
+            [
+                "claude",
+                "--print",
+                "--mcp-config", str(MCP_CONFIG),
+                "--allowedTools", "mcp__youtube-mcp__get_youtube_video_info",
+                "--",  # Separates flags from prompt (--mcp-config is variadic)
+                f"""Summarize this YouTube video. Use the get_youtube_video_info tool to fetch the transcript. Provide:
 1. One-line TLDR
 2. 3-5 key bullet points
 3. Notable quotes (if any)
 
-{url}"""],
+{url}"""
+            ],
             capture_output=True,
             text=True,
-            timeout=120
+            timeout=120,
+            cwd=PROJECT_DIR,  # Run from project dir so relative paths in mcp config work
         )
         return result.stdout or result.stderr or "No response from Claude"
     except subprocess.TimeoutExpired:

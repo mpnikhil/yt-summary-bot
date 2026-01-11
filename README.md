@@ -9,66 +9,54 @@ Phone (share to Telegram bot) → Desktop (Claude CLI) → Telegram reply
 ## Requirements
 
 - Mac or Linux machine that stays on
-- [Claude CLI](https://docs.anthropic.com/en/docs/claude-cli) with YouTube MCP
+- [Claude CLI](https://docs.anthropic.com/en/docs/claude-cli)
 - Telegram account
 
 ## Setup
 
-### 1. Create your Telegram bot (30 seconds)
+### 1. Clone
+
+```bash
+git clone --recursive https://github.com/mpnikhil/yt-summarizer.git
+cd yt-summarizer
+```
+
+### 2. Create your Telegram bot (30 seconds)
 
 1. Open Telegram → message **@BotFather**
 2. Send `/newbot`
-3. Choose a name (e.g., "My YT Summarizer")
-4. Choose a username (e.g., "myname_yt_bot")
-5. Copy the token you receive
+3. Choose a name and username
+4. Copy the token
 
-### 2. Install the script
-
-```bash
-mkdir -p ~/.local/bin
-curl -o ~/.local/bin/yt-summarizer-telegram.py \
-  https://raw.githubusercontent.com/YOURUSER/yt-summarizer/main/yt-summarizer-telegram.py
-chmod +x ~/.local/bin/yt-summarizer-telegram.py
-
-# Install dependency
-pip install requests
-```
-
-### 3. Run it
+### 3. Run setup
 
 ```bash
-export TELEGRAM_BOT_TOKEN="your-token-here"
-~/.local/bin/yt-summarizer-telegram.py
+TELEGRAM_BOT_TOKEN="your-token-here" ./setup.sh
 ```
 
-### 4. Auto-start on boot (optional)
+Done! Share a YouTube video to your bot.
 
-**macOS:**
+## Commands
+
 ```bash
-# Edit plist first — add your bot token
-cp com.user.yt-summarizer.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.user.yt-summarizer.plist
+# View logs
+tail -f /tmp/yt-summarizer.log                    # macOS
+journalctl --user -u yt-summarizer -f             # Linux
+
+# Stop service
+launchctl unload ~/Library/LaunchAgents/com.user.yt-summarizer.plist   # macOS
+systemctl --user stop yt-summarizer                                      # Linux
+
+# Restart service
+launchctl unload ~/Library/LaunchAgents/com.user.yt-summarizer.plist && launchctl load ~/Library/LaunchAgents/com.user.yt-summarizer.plist   # macOS
+systemctl --user restart yt-summarizer                                   # Linux
 ```
-
-**Linux (systemd):**
-```bash
-# Edit service file first — add your bot token
-mkdir -p ~/.config/systemd/user
-cp yt-summarizer.service ~/.config/systemd/user/
-systemctl --user enable yt-summarizer
-systemctl --user start yt-summarizer
-```
-
-## Usage
-
-1. Find a YouTube video on your phone
-2. Share → Telegram → your bot
-3. Get summary in the same chat
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `yt-summarizer-telegram.py` | Main script (Mac/Linux) |
-| `com.user.yt-summarizer.plist` | Auto-start for macOS |
-| `yt-summarizer.service` | Auto-start for Linux |
+| `yt-summarizer-telegram.py` | Main script |
+| `claude-config.json` | MCP config |
+| `youtube-mcp/` | YouTube MCP server (submodule) |
+| `setup.sh` | Setup + service installation |

@@ -8,8 +8,13 @@
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string>~/.local/bin/yt-summarizer-telegram.py</string>
+        <!-- EDIT: Update path to where you cloned the repo -->
+        <string>/Users/YOURUSER/yt-summarizer/yt-summarizer-telegram.py</string>
     </array>
+    
+    <key>WorkingDirectory</key>
+    <!-- EDIT: Update path to where you cloned the repo -->
+    <string>/Users/YOURUSER/yt-summarizer</string>
     
     <key>RunAtLoad</key>
     <true/>
@@ -27,7 +32,7 @@
     <dict>
         <key>PATH</key>
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
-        <!-- EDIT: Add your bot token below -->
+        <!-- EDIT: Add your bot token -->
         <key>TELEGRAM_BOT_TOKEN</key>
         <string>YOUR_BOT_TOKEN_HERE</string>
     </dict>
