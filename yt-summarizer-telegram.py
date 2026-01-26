@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Project directory (where this script and mcp config live)
 PROJECT_DIR = Path(__file__).parent.resolve()
-MCP_CONFIG = PROJECT_DIR / "claude-config.json"
+MCP_CONFIG = PROJECT_DIR / ".mcp.json"
 
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 if not BOT_TOKEN:
