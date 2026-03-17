@@ -3,6 +3,10 @@
     "youtube-mcp": {
       "command": "./.venv/bin/python",
       "args": ["./youtube-mcp/server.py"]
+    },
+    "duckduckgo": {
+      "command": "uvx",
+      "args": ["duckduckgo-mcp-server"]
     }
   }
 }
